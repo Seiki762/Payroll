@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRC Payroll Program</title>
+<style>
+  body {
+    background: linear-gradient(to right, #3a7bd5, #00d2ff);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    text-align: center;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    color: #ffffff;
+    margin-top: 30px;
+    text-shadow: 2px 2px 4px #00000040;
+  }
+
+  .container {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    width: 420px;
+    margin: 40px auto;
+    padding: 30px 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    color: #003366;
+  }
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 12px;
+    text-align: left;
+    width: 85%;
+    margin-left: 30px;
+  }
+
+  input {
+    width: 80%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #0059b3;
+    font-size: 14px;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: #0059b3;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #003d80;
+  }
+</style>
+</head>
+<body>
+  <h1>GRC PAYROLL PROGRAM</h1>
+  <div class="container">
+    <label>ID NUMBER</label>
+    <input type="text" id="idnum">
+
+    <label>LAST NAME</label>
+    <input type="text" id="lname">
+
+    <label>FIRST NAME</label>
+    <input type="text" id="fname">
+
+    <label>MIDDLE NAME</label>
+    <input type="text" id="mname">
+
+    <label>POSITION</label>
+    <input type="text" id="position">
+
+    <label>RATE</label>
+    <input type="number" id="rate">
+
+    <label>WORK DAYS</label>
+    <input type="number" id="days">
+
+    <button onclick="computePayroll()">SUBMIT</button>
+  </div>
+
+<script>
+function computePayroll() {
+  const idnum = document.getElementById("idnum").value;
+  const lname = document.getElementById("lname").value;
+  const fname = document.getElementById("fname").value;
+  const mname = document.getElementById("mname").value;
+  const position = document.getElementById("position").value;
+  const rate = parseFloat(document.getElementById("rate").value);
+  const days = parseFloat(document.getElementById("days").value);
+
+  const gross = rate * days;
+  const sss = gross * 0.05;
+  const pagibig = gross * 0.03;
+  const philhealth = gross * 0.02;
+  const tax = gross * 0.05;
+  const totalDeduction = sss + pagibig + philhealth + tax;
+  const net = gross - totalDeduction;
+
+  const payrollData = {
+    idnum, lname, fname, mname, position,
+    rate, days, gross, sss, pagibig, philhealth, tax, totalDeduction, net
+  };
+
+  localStorage.setItem("payroll", JSON.stringify(payrollData));
+  window.location.href = "display.html";
+}
+</script>
+</body>
+</html>
